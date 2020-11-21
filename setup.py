@@ -32,7 +32,7 @@ version_mod = imp.load_source('version', join(PY_SRC_DIR, 'version.py'))
 version = version_mod.__version__
 
 PY2 = sys.version_info[0] < 3
-
+PY38Plus = sys.version_info[0] == 3 and sys.version_info[1] >= 8
 
 # .rst should created by pyconcrete-admin
 if os.path.exists('README.rst'):
@@ -322,7 +322,7 @@ def get_libraries(include_python_lib=False):
     if is_msvc():
         link_py = 'python{0}{1}'.format(*sys.version_info[0:2])
     else:
-        if PY2:
+        if PY2 or PY38Plus:
             link_py_fmt = 'python{version}'
         else:
             link_py_fmt = 'python{version}m'
